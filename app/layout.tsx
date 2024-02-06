@@ -1,18 +1,15 @@
+import { ColorSchemeScript, MantineProvider } from '@mantine/core'
+
+import theme from '@/app/theme'
+
+import '@mantine/core/styles.css'
 import './globals.css'
-import { Inter } from 'next/font/google'
 
 export const metadata = {
-  metadataBase: new URL('https://postgres-kysely.vercel.app'),
-  title: 'Vercel Postgres Demo with Kysely',
-  description:
-    'A simple Next.js app with Vercel Postgres as the database and Kysely as the ORM',
-}
-
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-  display: 'swap',
-})
+  metadataBase: 'http://sherpahub',
+  title: 'Sherpa hub',
+  description: '',
+};
 
 export default function RootLayout({
   children,
@@ -21,7 +18,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.variable}>{children}</body>
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <body>
+        <MantineProvider theme={theme}>
+          {children}
+        </MantineProvider>
+      </body>
     </html>
-  )
+  );
 }
