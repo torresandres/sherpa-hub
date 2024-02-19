@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { auth } from '@/auth'
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  if (true) { // not logged in
-    return NextResponse.redirect(new URL('/login', request.url))
+export async function middleware(request: NextRequest) {
+  const session = await auth()
+
+  if (!session && request.nextUrl.pathname !== '/') {
+    return NextResponse.redirect(new URL('/', request.url))
   }
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: '/dashboard/:path*',
+  matcher: '/((?!api|_next/static|_next/image|favicon.ico|favicon-16x16.png|apple-touch-icon.png).*)',
 }

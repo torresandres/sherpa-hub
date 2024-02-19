@@ -1,15 +1,14 @@
-import { getServerSession } from 'next-auth'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { auth } from '@/auth'
 import theme from '@/app/theme'
 
 import '@mantine/core/styles.css'
 import './globals.css'
 
 export const metadata = {
-  metadataBase: 'http://sherpahub',
-  title: 'Sherpa hub',
+  metadataBase: new URL(`https://${process.env.VERCEL_URL || process.env.NEXTAUTH_URL}`),
+  title: 'Sherpa Hub',
   description: '',
 };
 
@@ -18,7 +17,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   return (
     <html lang="en">
       <head>

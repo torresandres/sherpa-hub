@@ -1,5 +1,10 @@
+import Header from '@/components/Header/Header'
+
 export default function DashboardPage() {
   return (
-    <div>Dashboard</div>
+    <div>
+      <Header />
+      <h2>Dashboard</h2>
+    </div>
   )
 }
