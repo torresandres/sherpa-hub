@@ -1,5 +1,7 @@
+import { getServerSession } from 'next-auth'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import theme from '@/app/theme'
 
 import '@mantine/core/styles.css'
@@ -11,11 +13,12 @@ export const metadata = {
   description: '',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const session = await getServerSession(authOptions)
   return (
     <html lang="en">
       <head>
@@ -24,6 +27,7 @@ export default function RootLayout({
       <body>
         <MantineProvider theme={theme}>
           {children}
+          <pre>{JSON.stringify(session, null, 2)}</pre>
         </MantineProvider>
       </body>
     </html>
