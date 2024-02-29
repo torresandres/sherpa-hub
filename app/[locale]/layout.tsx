@@ -1,7 +1,7 @@
-import { NextRequest } from 'next/server'
-import { ColorSchemeScript, MantineProvider } from '@mantine/core'
+import { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
+import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 
 import { auth } from '@/auth'
 import theme from '@/app/theme'
@@ -9,8 +9,8 @@ import theme from '@/app/theme'
 import '@mantine/core/styles.css'
 import '../globals.css'
 
-export const metadata = {
-  metadataBase: new URL(`https://${process.env.VERCEL_URL || process.env.NEXTAUTH_URL}`),
+export const metadata: Metadata = {
+  metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
   title: 'Sherpa Hub',
   description: '',
 }
