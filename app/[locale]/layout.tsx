@@ -32,7 +32,7 @@ export default async function RootLayout({
       </head>
       <body>
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <MantineProvider theme={theme}>
+        <MantineProvider theme={theme} defaultColorScheme="dark">
           {children}
           <pre>{JSON.stringify(locale, null, 2)}</pre>
           <pre>{JSON.stringify(session, null, 2)}</pre>
