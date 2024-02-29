@@ -2,10 +2,12 @@
 
 import { useCallback } from 'react'
 import { signIn, signOut } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 
 import classes from './Header.module.css'
 
 export default function Header() {
+  const t = useTranslations()
   const login = useCallback(() => {
     signIn('discord', { callbackUrl: '/' })
   }, [])
@@ -16,7 +18,7 @@ export default function Header() {
 
   return (
     <header>
-      <h1 className={classes.title}>Sherpa Hub</h1>
+      <h1 className={classes.title}>{t('App.name')}</h1>
       <button onClick={login}>Login</button>
       <button onClick={logout}>Logout</button>
     </header>
