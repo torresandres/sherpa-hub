@@ -30,9 +30,10 @@ export default {
     session: async ({ session, token }) => {
       if (session?.user && token.profile) {
         session.user = {
+          ...session.user,
           name: session.user.name || '',
           email: session.user.email || '',
-          image: session.user.image || '',
+          image_url: session.user.image_url || '',
           ...token.profile,
         }
       }

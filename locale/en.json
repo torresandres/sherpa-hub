@@ -1,5 +1,9 @@
 {
   "App": {
-    "name": "Sherpa Hub (EN)"
+    "name": "Sherpa Hub"
+  },
+  "Header": {
+    "login": "Login",
+    "logout": "Logout"
   }
 }

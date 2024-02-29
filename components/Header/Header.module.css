@@ -1,10 +1,33 @@
-.title {
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  font-size: rem(36px);
-  font-weight: 900;
-  letter-spacing: rem(-2px);
+.wrapper {
+  width: 100%;
+  height: 60px;
+  padding: 0 var(--mantine-spacing-sm);
+  background-color: var(--mantine-color-dark-9);
+  border-bottom: solid 1px var(--mantine-primary-color-6);
+}
 
-  @media (max-width: $mantine-breakpoint-md) {
-    font-size: rem(24px);
+.link {
+  color: var(--mantine-primary-color-6);
+
+  .logo {
+    width: 40px;
   }
+
+  .title {
+    height: 40px;
+    margin: 0;
+    font-size: rem(24px);
+    color: inherit;
+
+    @media (max-width: $mantine-breakpoint-md) {
+      font-size: rem(24px);
+    }
+  }
+}
+
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--mantine-spacing-md);
 }

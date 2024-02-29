@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { SessionProvider } from 'next-auth/react'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
@@ -6,7 +7,9 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import { auth } from '@/auth'
 import theme from '@/app/theme'
 
-import '@mantine/core/styles.css'
+import Header from '@/components/Header/Header'
+
+import '@mantine/core/styles.layer.css'
 import '../globals.css'
 
 export const metadata: Metadata = {
@@ -31,13 +34,14 @@ export default async function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-      <NextIntlClientProvider locale={locale} messages={messages}>
-        <MantineProvider theme={theme} defaultColorScheme="dark">
-          {children}
-          <pre>{JSON.stringify(locale, null, 2)}</pre>
-          <pre>{JSON.stringify(session, null, 2)}</pre>
-        </MantineProvider>
-      </NextIntlClientProvider>
+      <SessionProvider session={session}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <MantineProvider theme={theme} defaultColorScheme="dark">
+            <Header />
+            {children}
+          </MantineProvider>
+        </NextIntlClientProvider>
+      </SessionProvider>
       </body>
     </html>
   );
