@@ -30,10 +30,10 @@ export default function Header() {
         </Group>
       </Link>
       <Group ml="auto">
-      {session ? <>
+      {session?.user ? <>
         <Group gap="xs">
-          <Text>{session.user.username}</Text>
-          <Image className={classes.avatar} src={session.user.image_url} alt="" />
+          <Text>{session.user.name}</Text>
+          <Image className={classes.avatar} src={session.user.image} alt="" />
         </Group>
         <ActionIcon variant="subtle" onClick={logout} title={t('Header.logout')}>
           <IconLogout size={16} />

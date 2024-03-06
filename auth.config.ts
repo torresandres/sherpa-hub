@@ -2,7 +2,7 @@ import DiscordProvider from 'next-auth/providers/discord'
 
 import type { NextAuthConfig } from 'next-auth'
 
-import { db } from '@/lib/kysely'
+import { db, Database } from '@/lib/kysely'
 
 export default {
   secret: process.env.NEXTAUTH_SECRET,
@@ -21,12 +21,8 @@ export default {
       try {
         await db
           .insertInto('users')
-          .values({
-            //@ts-ignore
-            discord_uid: profile.id,
-            //@ts-ignore
-            discord_username: profile.username,
-          })
+          //@ts-ignore
+          .values({ id: profile.id })
           .executeTakeFirstOrThrow()
       } catch(error: any) {
         // User exists, do nothing
@@ -34,26 +30,28 @@ export default {
 
       return true
     },
-    jwt: async ({ token, account, profile }) => {
-      if (account) {
-        token.accessToken = account.access_token
+    jwt: async ({ token, profile }) => {
+      if (profile) {
         token.profile = profile
       }
 
       return token
     },
     session: async ({ session, token }) => {
-      if (session?.user && token.profile) {
-        session.user = {
+      const user = await db
+        .selectFrom('users')
+        .selectAll()
+        //@ts-ignore
+        .where('id', '=', token.profile.id)
+        .executeTakeFirst()
+
+      return {
+        ...session,
+        user: {
           ...session.user,
-          name: session.user.name || '',
-          email: session.user.email || '',
-          image_url: session.user.image_url || '',
-          ...token.profile,
+          ...user,
         }
       }
-
-      return session
     },
   }
 } satisfies NextAuthConfig

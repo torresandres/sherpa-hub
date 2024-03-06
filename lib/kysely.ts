@@ -2,22 +2,22 @@ import { Generated, ColumnType } from 'kysely'
 import { createKysely } from '@vercel/postgres-kysely'
 
 interface UserTable {
-  discord_uid: string,
-  discord_username: string,
-  locale: string | null,
+  id: string,
+  username: string,
+  locale: string,
   region: 'NA' | 'SA' | 'EU' | 'AF' | 'AS' | 'OCE',
   status: 'regular' | 'limited' | 'banned',
   role: 'user' | 'sherpa' | 'sherpa-instructor' | 'sherpa-coordinator' | 'emissary' | 'bsg',
-  created_at: ColumnType<Date, string | undefined, never>
-  updated_at: ColumnType<Date, string | undefined>
+  created_at: ColumnType<Date, string, never>
+  updated_at: ColumnType<Date, string>
 }
 interface SessionTable {
   id: Generated<number>,
   user_id: string,
   sherpa_id: string | null,
   status: 'open' | 'accepted' | 'in-progress' | 'closed',
-  created_at: ColumnType<Date, string | undefined, never>
-  updated_at: ColumnType<Date, string | undefined>
+  created_at: ColumnType<Date, string, never>
+  updated_at: ColumnType<Date, string>
 }
 
 export interface Database {
