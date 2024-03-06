@@ -1,6 +1,8 @@
 import DiscordProvider from 'next-auth/providers/discord'
 
-import type { NextAuthConfig } from 'next-auth'
+import type { NextAuthConfig, Profile } from 'next-auth'
+
+import { db } from '@/lib/kysely'
 
 export default {
   secret: process.env.NEXTAUTH_SECRET,
@@ -15,8 +17,21 @@ export default {
     strategy: 'jwt'
   },
   callbacks: {
-    signIn: async ({ user, profile }) => {
-      console.log('signIn', { user, profile })
+    signIn: async ({ profile }) => {
+      try {
+        await db
+          .insertInto('users')
+          .values({
+            //@ts-ignore
+            discord_uid: profile.id,
+            //@ts-ignore
+            discord_username: profile.username,
+          })
+          .executeTakeFirstOrThrow()
+      } catch(error: any) {
+        // User exists, do nothing
+      }
+
       return true
     },
     jwt: async ({ token, account, profile }) => {
