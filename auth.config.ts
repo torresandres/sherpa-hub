@@ -1,6 +1,6 @@
 import DiscordProvider from 'next-auth/providers/discord'
 
-import type { NextAuthConfig, Profile } from 'next-auth'
+import type { NextAuthConfig } from 'next-auth'
 
 import { db } from '@/lib/kysely'
 
