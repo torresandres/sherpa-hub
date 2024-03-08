@@ -4,12 +4,13 @@ import { createKysely } from '@vercel/postgres-kysely'
 interface UserTable {
   id: string,
   username: string,
-  locale: string,
-  region: 'NA' | 'SA' | 'EU' | 'AF' | 'AS' | 'OCE',
-  status: 'regular' | 'limited' | 'banned',
-  role: 'user' | 'sherpa' | 'sherpa-instructor' | 'sherpa-coordinator' | 'emissary' | 'bsg',
-  created_at: ColumnType<Date, string, never>
-  updated_at: ColumnType<Date, string>
+  avatar: string,
+  locale?: string,
+  region?: 'NA' | 'SA' | 'EU' | 'AF' | 'AS' | 'OCE',
+  status?: 'regular' | 'limited' | 'banned',
+  role?: 'user' | 'sherpa' | 'sherpa-instructor' | 'sherpa-coordinator' | 'emissary' | 'bsg',
+  created_at?: ColumnType<Date, string, never>
+  updated_at?: ColumnType<Date, string>
 }
 interface SessionTable {
   id: Generated<number>,

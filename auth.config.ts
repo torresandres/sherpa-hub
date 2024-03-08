@@ -1,4 +1,4 @@
-import DiscordProvider from 'next-auth/providers/discord'
+import DiscordProvider, { DiscordProfile } from 'next-auth/providers/discord'
 
 import type { NextAuthConfig } from 'next-auth'
 
@@ -21,11 +21,24 @@ export default {
       try {
         await db
           .insertInto('users')
-          //@ts-ignore
-          .values({ id: profile.id })
+          .values({
+            //@ts-ignore
+            id: profile?.id,
+            username: profile?.username as string,
+            avatar: profile?.avatar as string,
+          })
           .executeTakeFirstOrThrow()
       } catch(error: any) {
-        // User exists, do nothing
+        await db
+          .updateTable('users')
+          .set({
+            //@ts-ignore
+            username: profile?.username,
+            avatar: profile?.avatar,
+          })
+          //@ts-ignore
+          .where('id', '=', profile.id)
+          .executeTakeFirst()
       }
 
       return true
